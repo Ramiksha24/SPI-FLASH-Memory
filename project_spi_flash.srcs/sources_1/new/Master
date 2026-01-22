@@ -1,0 +1,139 @@
+`timescale 1ns / 1ps
+
+module spi_master #(
+    parameter SPI_FREQ = 10_000_000,
+    parameter CLK_FREQ = 100_000_000
+)(
+    input wire clk,
+    input wire rst_n,
+    output reg cs_n,
+    output reg sck,
+    output reg mosi,
+    input wire miso,
+    input wire [7:0] tx_data,
+    input wire tx_valid,
+    output reg tx_ready,
+    output reg [7:0] rx_data,
+    output reg rx_valid,
+    output wire busy
+);
+
+    localparam CLK_DIV = CLK_FREQ / (2 * SPI_FREQ);
+    localparam IDLE = 2'b00;
+    localparam SETUP = 2'b01;
+    localparam TRANSFER = 2'b10;
+    localparam FINISH = 2'b11;
+    
+    reg [1:0] state;
+    reg [15:0] clk_count;
+    reg [7:0] shift_reg;
+    reg [2:0] bit_count;
+    reg sck_enable;
+    reg sck_falling_edge;  // NEW: Flag to detect SCK falling edge
+    
+    assign busy = (state != IDLE);
+    
+    // Detect SCK edges
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            sck_falling_edge <= 1'b0;
+        end else begin
+            // Detect when SCK is about to fall (transition from 1 to 0)
+            sck_falling_edge <= (clk_count == CLK_DIV - 1) && (sck == 1'b1) && sck_enable;
+        end
+    end
+    
+    // Clock generation for SPI
+    always @(posedge clk or negedge rst_n) begin
+        if(!rst_n) begin
+            clk_count <= 0;
+            sck <= 0;
+        end else begin
+            if(sck_enable) begin 
+                if(clk_count == CLK_DIV - 1) begin
+                    clk_count <= 0;
+                    sck <= ~sck;
+                end else begin
+                    clk_count <= clk_count + 1;
+                end
+            end else begin 
+                clk_count <= 0;
+                sck <= 0;
+            end 
+        end
+    end 
+    
+    // State machine
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            state <= IDLE;
+            cs_n <= 1'b1;
+            mosi <= 1'b0;
+            shift_reg <= 8'h00;
+            bit_count <= 0;
+            tx_ready <= 1'b1;
+            rx_valid <= 1'b0;
+            rx_data <= 8'h00;
+            sck_enable <= 1'b0;
+        end else begin
+            rx_valid <= 1'b0;  // Default: pulse signal
+            
+            case (state)
+                IDLE: begin
+                    tx_ready <= 1'b1;
+                    cs_n <= 1'b1;
+                    sck_enable <= 1'b0;
+                    
+                    if (tx_valid && tx_ready) begin
+                        shift_reg <= tx_data;
+                        tx_ready <= 1'b0;
+                        cs_n <= 1'b0;  // Assert CS
+                        state <= SETUP;
+                    end
+                end
+                
+                SETUP: begin
+                    // Wait for CS setup time (tSLCH = 5ns min)
+                    bit_count <= 7;
+                    mosi <= shift_reg[7];  // Output MSB first
+                    sck_enable <= 1'b1;
+                    state <= TRANSFER;
+                end
+               
+                TRANSFER: begin
+                    // Transfer on SCK falling edge
+                    if (sck_falling_edge) begin
+                        // Sample MISO and shift
+                        shift_reg <= {shift_reg[6:0], miso};
+                        
+                        if (bit_count > 0) begin
+                            // More bits to transfer
+                            bit_count <= bit_count - 1;
+                            mosi <= shift_reg[6];  // Output next bit (before shift)
+                        end else begin
+                            // Last bit done - but keep SCK running for one more half cycle
+                            // So it ends LOW, not in the middle of a pulse
+                            state <= FINISH;
+                        end
+                    end
+                end 
+                
+                FINISH: begin
+                    // Wait for SCK to complete its cycle and go LOW
+                    // This ensures CS goes high AFTER the last SCK falling edge
+                    if (!sck && sck_enable) begin
+                        // SCK is now LOW, safe to stop and deassert CS
+                        sck_enable <= 1'b0;
+                        rx_data <= shift_reg;
+                        rx_valid <= 1'b1;
+                        cs_n <= 1'b1;  // Deassert CS
+                        state <= IDLE;
+                    end
+                end
+                
+                default: state <= IDLE;
+            endcase
+        end
+    end
+                              
+endmodule
