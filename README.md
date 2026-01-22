@@ -90,12 +90,8 @@ The controller consists of:
 
 ---
 
-## ⏱️ Parameters
 
-```verilog
-parameter CLK_FREQ = 100_000_000;  // System clock (Hz)
-parameter SPI_FREQ = 10_000_000;   // SPI clock (Hz)
-🚀 Future Improvements
+##🚀 Future Improvements
 
 Multi-byte burst read/write
 
