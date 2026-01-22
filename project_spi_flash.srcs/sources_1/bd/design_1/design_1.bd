@@ -1,0 +1,378 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0x944B4EFCC57A2652",
+      "device": "xc7a50tftg256-1",
+      "gen_directory": "../../../../project_spi_flash.gen/sources_1/bd/design_1",
+      "name": "design_1",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2022.1",
+      "validated": "true"
+    },
+    "design_tree": {
+      "clk_wiz_0": "",
+      "vio_0": "",
+      "ila_0": "",
+      "w25q128_controller_0": ""
+    },
+    "ports": {
+      "clk_in1_0": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "design_1_clk_in1_0",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "200000000"
+          },
+          "FREQ_TOLERANCE_HZ": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.0",
+            "value_src": "default"
+          }
+        }
+      },
+      "spi_cs_n_0": {
+        "direction": "O"
+      },
+      "spi_sck_0": {
+        "direction": "O"
+      },
+      "spi_mosi_0": {
+        "direction": "O"
+      },
+      "spi_miso_0": {
+        "direction": "I"
+      }
+    },
+    "components": {
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "xci_name": "design_1_clk_wiz_0_0",
+        "xci_path": "ip\\design_1_clk_wiz_0_0\\design_1_clk_wiz_0_0.xci",
+        "inst_hier_path": "clk_wiz_0",
+        "parameters": {
+          "CLKIN1_JITTER_PS": {
+            "value": "50.0"
+          },
+          "CLKOUT1_JITTER": {
+            "value": "112.316"
+          },
+          "CLKOUT1_PHASE_ERROR": {
+            "value": "89.971"
+          },
+          "MMCM_CLKFBOUT_MULT_F": {
+            "value": "5.000"
+          },
+          "MMCM_CLKIN1_PERIOD": {
+            "value": "5.000"
+          },
+          "MMCM_CLKIN2_PERIOD": {
+            "value": "10.0"
+          },
+          "PRIM_IN_FREQ": {
+            "value": "200.000"
+          },
+          "USE_LOCKED": {
+            "value": "false"
+          },
+          "USE_RESET": {
+            "value": "false"
+          }
+        }
+      },
+      "vio_0": {
+        "vlnv": "xilinx.com:ip:vio:3.0",
+        "xci_name": "design_1_vio_0_0",
+        "xci_path": "ip\\design_1_vio_0_0\\design_1_vio_0_0.xci",
+        "inst_hier_path": "vio_0",
+        "parameters": {
+          "C_NUM_PROBE_IN": {
+            "value": "5"
+          },
+          "C_NUM_PROBE_OUT": {
+            "value": "7"
+          },
+          "C_PROBE_OUT5_WIDTH": {
+            "value": "24"
+          },
+          "C_PROBE_OUT6_WIDTH": {
+            "value": "8"
+          }
+        }
+      },
+      "ila_0": {
+        "vlnv": "xilinx.com:ip:ila:6.2",
+        "xci_name": "design_1_ila_0_0",
+        "xci_path": "ip\\design_1_ila_0_0\\design_1_ila_0_0.xci",
+        "inst_hier_path": "ila_0",
+        "parameters": {
+          "C_DATA_DEPTH": {
+            "value": "32768"
+          },
+          "C_ENABLE_ILA_AXI_MON": {
+            "value": "false"
+          },
+          "C_MONITOR_TYPE": {
+            "value": "Native"
+          },
+          "C_NUM_OF_PROBES": {
+            "value": "11"
+          },
+          "C_PROBE10_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE1_WIDTH": {
+            "value": "24"
+          },
+          "C_PROBE2_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE4_WIDTH": {
+            "value": "8"
+          },
+          "C_PROBE5_WIDTH": {
+            "value": "24"
+          }
+        }
+      },
+      "w25q128_controller_0": {
+        "vlnv": "xilinx.com:module_ref:w25q128_controller:1.0",
+        "xci_name": "design_1_w25q128_controller_0_0",
+        "xci_path": "ip\\design_1_w25q128_controller_0_0\\design_1_w25q128_controller_0_0.xci",
+        "inst_hier_path": "w25q128_controller_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "w25q128_controller",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
+              }
+            }
+          },
+          "rst_n": {
+            "type": "rst",
+            "direction": "I",
+            "parameters": {
+              "POLARITY": {
+                "value": "ACTIVE_LOW",
+                "value_src": "constant"
+              }
+            }
+          },
+          "cmd_read_id": {
+            "direction": "I"
+          },
+          "cmd_read": {
+            "direction": "I"
+          },
+          "cmd_program": {
+            "direction": "I"
+          },
+          "cmd_erase_sector": {
+            "direction": "I"
+          },
+          "address": {
+            "direction": "I",
+            "left": "23",
+            "right": "0"
+          },
+          "write_data": {
+            "direction": "I",
+            "left": "7",
+            "right": "0"
+          },
+          "read_data": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          },
+          "jedec_id": {
+            "direction": "O",
+            "left": "23",
+            "right": "0"
+          },
+          "busy": {
+            "direction": "O"
+          },
+          "done": {
+            "direction": "O"
+          },
+          "error": {
+            "direction": "O"
+          },
+          "spi_cs_n": {
+            "direction": "O"
+          },
+          "spi_sck": {
+            "direction": "O"
+          },
+          "spi_mosi": {
+            "direction": "O"
+          },
+          "shift_out": {
+            "direction": "O",
+            "left": "7",
+            "right": "0"
+          },
+          "spi_miso": {
+            "direction": "I"
+          }
+        }
+      }
+    },
+    "nets": {
+      "clk_in1_0_1": {
+        "ports": [
+          "clk_in1_0",
+          "clk_wiz_0/clk_in1"
+        ]
+      },
+      "clk_wiz_0_clk_out1": {
+        "ports": [
+          "clk_wiz_0/clk_out1",
+          "vio_0/clk",
+          "ila_0/clk",
+          "w25q128_controller_0/clk"
+        ]
+      },
+      "spi_miso_0_1": {
+        "ports": [
+          "spi_miso_0",
+          "ila_0/probe9",
+          "w25q128_controller_0/spi_miso"
+        ]
+      },
+      "vio_0_probe_out0": {
+        "ports": [
+          "vio_0/probe_out0",
+          "ila_0/probe0",
+          "w25q128_controller_0/rst_n"
+        ]
+      },
+      "vio_0_probe_out1": {
+        "ports": [
+          "vio_0/probe_out1",
+          "w25q128_controller_0/cmd_read_id"
+        ]
+      },
+      "vio_0_probe_out2": {
+        "ports": [
+          "vio_0/probe_out2",
+          "w25q128_controller_0/cmd_read"
+        ]
+      },
+      "vio_0_probe_out3": {
+        "ports": [
+          "vio_0/probe_out3",
+          "w25q128_controller_0/cmd_program"
+        ]
+      },
+      "vio_0_probe_out4": {
+        "ports": [
+          "vio_0/probe_out4",
+          "w25q128_controller_0/cmd_erase_sector"
+        ]
+      },
+      "vio_0_probe_out5": {
+        "ports": [
+          "vio_0/probe_out5",
+          "ila_0/probe1",
+          "w25q128_controller_0/address"
+        ]
+      },
+      "vio_0_probe_out6": {
+        "ports": [
+          "vio_0/probe_out6",
+          "ila_0/probe4",
+          "w25q128_controller_0/write_data"
+        ]
+      },
+      "w25q128_controller_0_busy": {
+        "ports": [
+          "w25q128_controller_0/busy",
+          "vio_0/probe_in2",
+          "ila_0/probe3"
+        ]
+      },
+      "w25q128_controller_0_done": {
+        "ports": [
+          "w25q128_controller_0/done",
+          "vio_0/probe_in3"
+        ]
+      },
+      "w25q128_controller_0_error": {
+        "ports": [
+          "w25q128_controller_0/error",
+          "vio_0/probe_in4"
+        ]
+      },
+      "w25q128_controller_0_jedec_id": {
+        "ports": [
+          "w25q128_controller_0/jedec_id",
+          "vio_0/probe_in1",
+          "ila_0/probe5"
+        ]
+      },
+      "w25q128_controller_0_read_data": {
+        "ports": [
+          "w25q128_controller_0/read_data",
+          "vio_0/probe_in0",
+          "ila_0/probe2"
+        ]
+      },
+      "w25q128_controller_0_shift": {
+        "ports": [
+          "w25q128_controller_0/shift_out",
+          "ila_0/probe10"
+        ]
+      },
+      "w25q128_controller_0_spi_cs_n": {
+        "ports": [
+          "w25q128_controller_0/spi_cs_n",
+          "spi_cs_n_0",
+          "ila_0/probe6"
+        ]
+      },
+      "w25q128_controller_0_spi_mosi": {
+        "ports": [
+          "w25q128_controller_0/spi_mosi",
+          "spi_mosi_0",
+          "ila_0/probe8"
+        ]
+      },
+      "w25q128_controller_0_spi_sck": {
+        "ports": [
+          "w25q128_controller_0/spi_sck",
+          "spi_sck_0",
+          "ila_0/probe7"
+        ]
+      }
+    }
+  }
+}

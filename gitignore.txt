@@ -1,0 +1,17 @@
+# Vivado generated files
+*.xpr
+*.jou
+*.log
+*.str
+
+project_spi_flash.cache/
+project_spi_flash.gen/
+project_spi_flash.hw/
+project_spi_flash.ip_user_files/
+project_spi_flash.runs/
+project_spi_flash.sim/
+
+
+# OS files
+.DS_Store
+Thumbs.db
