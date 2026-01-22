@@ -2,8 +2,8 @@
 
 //===========================================================================
 // COMPLETE W25Q128JV SPI FLASH CONTROLLER
-// Handles: Read ID, Read Data, Page Program, Sector Erase with proper timing
-// All timing requirements met per datasheet
+// Handles: Read ID, Read Data, Page Program, Sector Erase 
+
 //===========================================================================
 
 module w25q128_controller #(
@@ -252,7 +252,7 @@ module w25q128_controller #(
                     end else if (bit_counter == 0) begin
                         spi_cs_n <= 1;
                         sck_enable <= 0;
-                        wait_counter <= 300;  // 3µs @ 100MHz
+                        wait_counter <= 300;  // 3Âµs @ 100MHz
                         state <= ST_IDLE;
                     end
                 end
@@ -429,7 +429,7 @@ module w25q128_controller #(
                     end else if (bit_counter == 0) begin
                         spi_cs_n <= 1;
                         sck_enable <= 0;
-                        wait_counter <= 5000;  // 50µs min CS deselect
+                        wait_counter <= 5000;  // 50Âµs min CS deselect
                         return_state <= ST_DONE;
                         state <= ST_CHECK_STATUS;
                     end
@@ -494,7 +494,7 @@ module w25q128_controller #(
                         end else begin
                             spi_cs_n <= 1;
                             sck_enable <= 0;
-                            wait_counter <= 5000;  // 50µs
+                            wait_counter <= 5000;  // 50Âµs
                             return_state <= ST_DONE;
                             state <= ST_CHECK_STATUS;
                         end
@@ -548,7 +548,7 @@ module w25q128_controller #(
                         state <= return_state;
                     end else begin
                         // Still busy, check again
-                        wait_counter <= 1000;  // 10µs between polls
+                        wait_counter <= 1000;  // 10Âµs between polls
                         state <= ST_CHECK_STATUS;
                     end
                 end
