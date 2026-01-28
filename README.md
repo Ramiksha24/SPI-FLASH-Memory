@@ -30,6 +30,8 @@ The controller consists of:
 - MOSI/MISO shift registers
 - Central FSM for command sequencing
 - Busy polling and timeout logic
+
+  
 ![Block Diagram](Images/Block_Diagram.png)
 
 
@@ -89,6 +91,7 @@ The controller consists of:
 | `spi_miso` | Input | Master In |
 
 ---
+![OUTPUT](Images/Output.png)
 
 
 ##🚀 Future Improvements
