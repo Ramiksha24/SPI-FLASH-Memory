@@ -30,8 +30,8 @@ The controller consists of:
 - MOSI/MISO shift registers
 - Central FSM for command sequencing
 - Busy polling and timeout logic
+![Block Diagram](Images/block_diagram.png)
 
-[Block Diagram](Images/Block Diagram.png)
 
 ---
 
